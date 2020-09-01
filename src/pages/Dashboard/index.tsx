@@ -9,6 +9,7 @@ import api from '../../services/api';
 import Header from '../../components/Header';
 
 import formatValue from '../../utils/formatValue';
+import formatDate from '../../utils/formatDate';
 
 import { Container, CardContainer, Card, TableContainer } from './styles';
 
@@ -97,7 +98,7 @@ const Dashboard: React.FC = () => {
                   <td className="title">{title}</td>
                   <td className={type}>{formatValue(value)}</td>
                   <td>{!category ? '' : category.title}</td>
-                  <td>{created_at}</td>
+                  <td>{formatDate(created_at)}</td>
                 </tr>
               )))}
             </tbody>
