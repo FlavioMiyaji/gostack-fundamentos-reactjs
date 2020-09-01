@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import filesize from 'filesize';
 
@@ -9,7 +8,7 @@ import Upload from '../../components/Upload';
 
 import { Container, Title, ImportFileContainer, Footer } from './styles';
 
-import alert from '../../assets/alert.svg';
+import alertIcon from '../../assets/alert.svg';
 import api from '../../services/api';
 
 interface FileProps {
@@ -20,22 +19,26 @@ interface FileProps {
 
 const Import: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileProps[]>([]);
-  const history = useHistory();
 
   async function handleUpload(): Promise<void> {
-    // const data = new FormData();
-
-    // TODO
+    const data = new FormData();
+    uploadedFiles.forEach(file => (
+      data.append('file', uploadedFiles[0].file)
+    ))
 
     try {
-      // await api.post('/transactions/import', data);
+      await api.post('/transactions/import', data);
     } catch (err) {
-      // console.log(err.response.error);
+      alert(err.message);
     }
   }
 
   function submitFile(files: File[]): void {
-    // TODO
+    setUploadedFiles(files.map(file => ({
+      file,
+      name: file.name,
+      readableSize: filesize(file.size),
+    })));
   }
 
   return (
@@ -49,7 +52,7 @@ const Import: React.FC = () => {
 
           <Footer>
             <p>
-              <img src={alert} alt="Alert" />
+              <img src={alertIcon} alt="Alert" />
               Permitido apenas arquivos CSV
             </p>
             <button onClick={handleUpload} type="button">

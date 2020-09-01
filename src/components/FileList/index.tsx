@@ -14,12 +14,12 @@ interface FileListProps {
 const FileList: React.FC<FileListProps> = ({ files }: FileListProps) => {
   return (
     <Container>
-      {files.map((uploadedFile) => (
-        <li key={uploadedFile.name}>
+      {files.map(({ name, readableSize }) => (
+        <li key={name}>
           <FileInfo>
             <div>
-              <strong>{uploadedFile.name}</strong>
-              <span>{uploadedFile.readableSize}</span>
+              <strong>{name}</strong>
+              <span>{readableSize}</span>
             </div>
           </FileInfo>
         </li>
